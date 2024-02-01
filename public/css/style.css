@@ -4,8 +4,8 @@
 }
 
 .header .inner-logo img{
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 100px;
+    max-width: 100px;
 }
 
 .header .inner-menu > ul {
