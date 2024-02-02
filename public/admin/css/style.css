@@ -41,3 +41,7 @@
     padding: 6px 10px;
     border-bottom: 1px solid #515151;
 }
+
+.table tbody td > button {
+    margin: 0 5px;
+}
