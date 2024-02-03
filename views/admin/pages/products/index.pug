@@ -1,11 +1,11 @@
 extends ../../layouts/default.pug
 
 block main 
-    h1 Danh sach san pham
+    h1 Danh sách sản phẩm
 
-    .card.mb-3 
+    .card.mb-3
         .card-header Bộ lọc và tìm kiếm
-        .card-body 
+        .card-body
             .row
                 .col-6
                     each item in filterStatus 
@@ -21,6 +21,7 @@ block main
                                 placeholder="Nhập từ khóa"
                                 name="keyword"
                                 class="form-control"
+                                value=`${keyword}`
                             )
                             .input-group-append 
                                 button(
