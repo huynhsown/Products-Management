@@ -1,5 +1,6 @@
 const PATH_AMIN = '/admin'
 
 module.exports = {
-    prefixAdmin: PATH_AMIN
+    prefixAdmin: PATH_AMIN,
+    itemsInPage: 7
 }

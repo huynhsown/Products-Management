@@ -45,3 +45,17 @@ block main
                             td 
                                 button(class="btn btn-warning btn-sm") Sửa
                                 button(class="btn btn-danger btn-sm ml-l") Xóa
+
+                                
+    nav(class="row")
+        ul.pagination
+            li.page-item
+                button(class=`page-link ${objPagination.pageNumber==1 ? "disabled": ""}` 
+                page-number="-1") Trước 
+            -for (let i=0; i<objPagination.totalPage; i++)
+                li.page-item
+                    button(class=`page-link ${i+1==objPagination.pageNumber ? "active": ""}` 
+                    page-number=`${i+1}`) #{i+1}
+            li.page-item
+                button(class=`page-link ${objPagination.pageNumber==objPagination.totalPage ? "disabled" : ""}` 
+                page-number="+1") Sau 
