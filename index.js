@@ -6,6 +6,7 @@ const port = process.env.PORT
 const routeAdmin = require('./routes/admin/index.route')
 const route = require('./routes/client/index.route')
 const methodOverride = require('method-override')
+const bodyParser = require('body-parser')
 
 //App Local Variables
 const systemConfig = require('./config/system.js')
@@ -17,6 +18,9 @@ app.set('view engine', 'pug')
 
 app.use(express.static("public"))
 app.use(methodOverride("_method"))
+
+// create application/x-www-form-urlencoded parser
+app.use(bodyParser.urlencoded({extended:false}))
 
 routeAdmin(app)
 route(app)
