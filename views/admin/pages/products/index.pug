@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/form-change-multi.pug
+include ../../mixins/form-submit.pug
 
 block main 
     h1 Danh sách sản phẩm
@@ -56,7 +57,11 @@ block main
                                 ) #{(item.status==="active" ? "Hoạt động" : "Dừng hoạt động")}
                             td 
                                 button(class="btn btn-warning btn-sm") Sửa
-                                button(class="btn btn-danger btn-sm ml-l") Xóa
+                                button(
+                                    class="btn btn-danger btn-sm ml-l"
+                                    button-delete
+                                    data-id = item.id
+                                    ) Xóa
 
                                 
     nav(class="row")
@@ -72,13 +77,9 @@ block main
                 button(class=`page-link ${objPagination.pageNumber==objPagination.totalPage ? "disabled" : ""}` 
                 page-number="+1") Sau 
 
+    +form-submit("form-change-status", `${prefixAdmin}/products/change-status`)
 
-    form(
-        action=""
-        method="POST"
-        id="form-change-status"
-        data-path=`${prefixAdmin}/products/change-status`
-    )
+    +form-submit("form-delete-product", `${prefixAdmin}/products/delete-product`) 
 
 
     script(src="/admin/js/product.js") 

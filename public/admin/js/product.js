@@ -54,3 +54,22 @@ if(formChangeMulti){
     })
 }
 //End Form Change Multi 
+
+
+//Delete Product
+
+const allButtonDelete = document.querySelectorAll('[button-delete]')
+if(allButtonDelete.length){
+    const formDeleleProduct = document.querySelector("#form-delete-product")
+    const path = formDeleleProduct.getAttribute('data-path')
+    allButtonDelete.forEach(button => {
+        button.addEventListener('click', ()=>{
+            const isConfirm = confirm("Đồng ý xóa sản phẩm")
+            if(!isConfirm) return
+            const currentId = button.getAttribute("data-id")
+            const action = `${path}/${currentId}?_method=DELETE`
+            formDeleleProduct.setAttribute("action", action)
+            formDeleleProduct.submit()
+        })
+    })
+}
