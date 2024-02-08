@@ -81,3 +81,31 @@ module.exports.deleteProduct = async (req, res)=>{
     })
     res.redirect("back")
 }
+
+module.exports.trashProduct = async (req,res)=>{
+    const find = {
+        deleted: true
+    }
+    const objSearch = searchHelper(req.query)
+    if(objSearch.regex) find.title = objSearch.regex 
+
+    const products = await Product.find(find)
+
+    res.render('admin/pages/products/trash', {
+        pageTitle: "Thùng rác",
+        keyword:objSearch.keyword,
+        products: products
+    })
+}
+
+module.exports.trashRestore = async (req, res) => {
+    const id = req.params.id
+    await Product.updateOne({ _id: id}, {deleted: false})
+    res.redirect('back')
+}
+
+module.exports.trashPermanentDelete = async (req, res) => {
+    const id = req.params.id
+    await Product.deleteOne({_id:id})
+    res.redirect('back')
+}

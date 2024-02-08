@@ -63,19 +63,23 @@ block main
                                     data-id = item.id
                                     ) Xóa
 
-                                
-    nav(class="row")
-        ul.pagination
-            li.page-item
-                button(class=`page-link ${objPagination.pageNumber==1 ? "disabled": ""}` 
-                page-number="-1") Trước 
-            -for (let i=0; i<objPagination.totalPage; i++)
-                li.page-item
-                    button(class=`page-link ${i+1==objPagination.pageNumber ? "active": ""}` 
-                    page-number=`${i+1}`) #{i+1}
-            li.page-item
-                button(class=`page-link ${objPagination.pageNumber==objPagination.totalPage ? "disabled" : ""}` 
-                page-number="+1") Sau 
+
+    .row 
+        .col-8                    
+            nav(class="row")
+                ul.pagination
+                    li.page-item
+                        button(class=`page-link ${objPagination.pageNumber==1 ? "disabled": ""}` 
+                        page-number="-1") Trước 
+                    -for (let i=0; i<objPagination.totalPage; i++)
+                        li.page-item
+                            button(class=`page-link ${i+1==objPagination.pageNumber ? "active": ""}` 
+                            page-number=`${i+1}`) #{i+1}
+                    li.page-item
+                        button(class=`page-link ${objPagination.pageNumber==objPagination.totalPage ? "disabled" : ""}` 
+                        page-number="+1") Sau 
+        .col-2 
+            a(href=`${prefixAdmin}/products/trash` class="btn btn-secondary") Thùng rác
 
     +form-submit("form-change-status", `${prefixAdmin}/products/change-status`)
 
