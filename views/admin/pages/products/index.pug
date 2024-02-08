@@ -19,9 +19,28 @@ block main
     .card.mb-3 
         .card-header Danh sách sản phẩm 
         .card-body
-
-            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
-
+            +form-change-multi(
+                "Thay đổi trạng thái hoạt động" ,
+                `${prefixAdmin}/products/change-multi?_method=PATCH`,
+                {
+                    active: {
+                        value: "active",
+                        valueTitle: "Hoạt động"
+                    },
+                    inactive: {
+                        value: "inactive",
+                        valueTitle: "Đừng hoạt động"
+                    },
+                    recycleDel: {
+                        value: "recycledelete",
+                        valueTitle: "Chuyển vào thùng rác"
+                    },
+                    permanentDel: {
+                        value: "permanentdelete",
+                        valueTitle: "Xóa vĩnh viễn"
+                    }
+                },
+            )
             table(class="table table-hover table-sm" checkbox-multi)
                 thead 
                     tr 
@@ -33,7 +52,6 @@ block main
                         th Giá
                         th Trạng thái
                         th Hoạt động
-
                 tbody 
                     each item, index in products
                         tr 
@@ -62,7 +80,6 @@ block main
                                     button-delete
                                     data-id = item.id
                                     ) Xóa
-
 
     .row 
         .col-8                    

@@ -45,7 +45,6 @@ if(formChangeMulti){
             const ids = Array.from(inputCheckBoxes).map(input => input.value).join(', ')
             const inputIds = formChangeMulti.querySelector('input[name="ids"]')
             inputIds.value = ids
-            console.log(inputIds.value)
             formChangeMulti.submit()
         }
         else{
