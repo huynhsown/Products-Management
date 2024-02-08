@@ -31,7 +31,10 @@ module.exports.products = async (req,res)=>{
     objPagination.skip = (objPagination.pageNumber-1)*itemsInPage
     //End Pagination
 
-    const products = await Product.find(find).limit(itemsInPage).skip(objPagination.skip)
+    const products = await Product.find(find)
+                                    .sort({position: "asc"})
+                                    .limit(itemsInPage)
+                                    .skip(objPagination.skip)
     objPagination.totalPage = Math.ceil(await Product.find(find).countDocuments()/itemsInPage)
 
     res.render('admin/pages/products/index', {
@@ -57,26 +60,35 @@ module.exports.changeStatus = async (req,res)=>{
 module.exports.changeMulti = async (req,res)=>{
     const type = req.body.type
     const ids = req.body.ids.split(", ")
+    const newIds = ids.map(id => id.split('-')[0])
+    const position = ids.map(id => parseInt(id.split('-')[1]))
     
     switch (type) {
         case "active":
-            await Product.updateMany( { _id: {$in : ids} } , {status : "active"})
+            await Product.updateMany( { _id: {$in : newIds} } , {status : "active"})
             break;
         case "inactive":
-            await Product.updateMany( { _id: {$in : ids} } , {status : "inactive"})
+            await Product.updateMany( { _id: {$in : newIds} } , {status : "inactive"})
             break;
         case "recycledelete":
-            await Product.updateMany({_id: {$in: ids}}, {deleted: true})
+            await Product.updateMany({_id: {$in: newIds}}, {deleted: true})
             break;
         
         case "permanentdelete":
-            await Product.deleteMany({_id: {$in: ids}})
+            await Product.deleteMany({_id: {$in: newIds}})
+            break;
+        case "position":
+            newIds.forEach(async (item, index) => {
+                await Product.updateOne({_id: item}, {position: position[index]})
+            });
             break;
         default:
             break;
     }
 
     res.redirect("back")
+
+    // res.send("HELLO")
 }
 
 // [DELETE] /admin/products/delete-product/:id

@@ -41,8 +41,21 @@ if(formChangeMulti){
     formChangeMulti.addEventListener('submit', (e) => {
         e.preventDefault()
         const inputCheckBoxes = checkBoxMulti.querySelectorAll('input[name="id"]:checked')
+        const typeChange = e.target.elements.type.value
+        if(typeChange === "recycledelete" || typeChange === "permanentdelete"){
+            const isConfirm = confirm("Đồng ý xóa")
+            if(!isConfirm) return
+        }
+
+
+
         if(inputCheckBoxes.length){
-            const ids = Array.from(inputCheckBoxes).map(input => input.value).join(', ')
+            const ids = Array.from(inputCheckBoxes).map(input => {
+                const position = input
+                                    .closest('tr')
+                                    .querySelector('input[name="position"]').value
+                return `${input.value}-${position}`
+            }).join(', ')
             const inputIds = formChangeMulti.querySelector('input[name="ids"]')
             inputIds.value = ids
             formChangeMulti.submit()
