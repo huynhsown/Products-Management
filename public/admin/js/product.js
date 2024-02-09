@@ -85,3 +85,13 @@ if(allButtonDelete.length){
         })
     })
 }
+
+//Flash
+
+const flashMessage = document.querySelector('[show-alert]')
+if(flashMessage){
+    const time = parseInt(flashMessage.getAttribute('data-time'))
+    setTimeout(()=>{
+        flashMessage.classList.add("alert-hidden")
+    },time)
+}

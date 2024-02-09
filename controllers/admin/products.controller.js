@@ -51,7 +51,12 @@ module.exports.products = async (req,res)=>{
 module.exports.changeStatus = async (req,res)=>{
     const status = req.params.status
     const id = req.params.id
-    await Product.updateOne({ _id: id}, {status: status})
+    try {
+        await Product.updateOne({ _id: id}, {status: status})
+        req.flash("success", "Cập nhật trạng thái thành công!")
+    } catch (error) {
+        req.flash("failed", "Cập nhật trạng thái thất bại!")
+    }
     res.redirect("back")
 }
 
@@ -65,10 +70,20 @@ module.exports.changeMulti = async (req,res)=>{
     
     switch (type) {
         case "active":
-            await Product.updateMany( { _id: {$in : newIds} } , {status : "active"})
+            try{
+                await Product.updateMany( { _id: {$in : newIds} } , {status : "active"})
+                req.flash("success", `Cập nhật thành công trạng thái của ${ids.length} sản phẩm`)
+            }catch (e){
+                req.flash("failed", `Cập nhật thất bại trạng thái của ${id.length} sản phẩm`)
+            }
             break;
         case "inactive":
-            await Product.updateMany( { _id: {$in : newIds} } , {status : "inactive"})
+            try{
+                await Product.updateMany( { _id: {$in : newIds} } , {status : "inactive"})
+                req.flash("success", `Cập nhật thành công trạng thái của ${ids.length} sản phẩm`)
+            }catch (e){
+                req.flash("failed", `Cập nhật thất bại trạng thái của ${id.length} sản phẩm`)
+            }
             break;
         case "recycledelete":
             await Product.updateMany({_id: {$in: newIds}}, {deleted: true})
