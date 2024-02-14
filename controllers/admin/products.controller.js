@@ -1,6 +1,7 @@
 const Product = require('../../models/product.model')
 const filterStatusHelper = require('../../helpers/filterStatus')
 const searchHelper = require('../../helpers/search')
+const { prefixAdmin } = require('../../config/system')
 const itemsInPage = require('../../config/system').itemsInPage
 // [GET] /admin/products 
 module.exports.products = async (req,res)=>{
@@ -32,7 +33,7 @@ module.exports.products = async (req,res)=>{
     //End Pagination
 
     const products = await Product.find(find)
-                                    .sort({position: "asc"})
+                                    .sort({position: "desc"})
                                     .limit(itemsInPage)
                                     .skip(objPagination.skip)
     objPagination.totalPage = Math.ceil(await Product.find(find).countDocuments()/itemsInPage)
@@ -57,6 +58,7 @@ module.exports.changeStatus = async (req,res)=>{
     } catch (error) {
         req.flash("failed", "Cập nhật trạng thái thất bại!")
     }
+    console.log(id)
     res.redirect("back")
 }
 
@@ -142,4 +144,32 @@ module.exports.trashPermanentDelete = async (req, res) => {
     const id = req.params.id
     await Product.deleteOne({_id:id})
     res.redirect('back')
+}
+
+//Create New Product
+module.exports.createProduct = (req,res) => {
+    res.render('admin/pages/products/addNewProduct', {
+        pageTitle: "Tạo mới sản phẩm"
+    })
+}
+
+module.exports.createPostProduct = async (req,res) => {
+    req.body.price = parseInt(req.body.price)
+    req.body.discountPercentage = parseInt(req.body.discountPercentage)
+    req.body.stock = parseInt(req.body.stock)
+
+    if(req.body.position == ""){
+        const countProduct = await Product.countDocuments()
+        req.body.position = countProduct + 1
+    }
+    else{
+        req.body.position = parseInt(req.body.position)
+    }
+
+    try {
+        await Product.create(req.body)
+    } catch (error) {
+        console.log("Error")
+    }
+    res.redirect(`${prefixAdmin}/products`)
 }

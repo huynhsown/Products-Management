@@ -8,18 +8,7 @@ include ../../mixins/flash.pug
 block main 
     h1 Danh sách sản phẩm
 
-    -if (messages.success)
-        div(
-            class="alert alert-success"
-            data-time="2500"
-            show-alert
-        ) #{messages.success}
-    -if (messages.failed)
-        div(
-            class="alert alert-danger"
-            data-time="2500"
-            show-alert
-        ) #{messages.failed}
+    +flash()
 
     .card.mb-3
         .card-header Bộ lọc và tìm kiếm
@@ -33,32 +22,41 @@ block main
     .card.mb-3 
         .card-header Danh sách sản phẩm 
         .card-body
-            +form-change-multi(
-                "Thay đổi trạng thái hoạt động" ,
-                `${prefixAdmin}/products/change-multi?_method=PATCH`,
-                {
-                    active: {
-                        value: "active",
-                        valueTitle: "Hoạt động"
-                    },
-                    inactive: {
-                        value: "inactive",
-                        valueTitle: "Đừng hoạt động"
-                    },
-                    recycleDel: {
-                        value: "recycledelete",
-                        valueTitle: "Chuyển vào thùng rác"
-                    },
-                    permanentDel: {
-                        value: "permanentdelete",
-                        valueTitle: "Xóa vĩnh viễn"
-                    },
-                    position: {
-                        value: "position",
-                        valueTitle: "Thay đổi vị trí"
-                    }
-                },
-            )
+            .row 
+                .col-8
+                    +form-change-multi(
+                        "Thay đổi trạng thái hoạt động" ,
+                        `${prefixAdmin}/products/change-multi?_method=PATCH`,
+                        {
+                            active: {
+                                value: "active",
+                                valueTitle: "Hoạt động"
+                            },
+                            inactive: {
+                                value: "inactive",
+                                valueTitle: "Đừng hoạt động"
+                            },
+                            recycleDel: {
+                                value: "recycledelete",
+                                valueTitle: "Chuyển vào thùng rác"
+                            },
+                            permanentDel: {
+                                value: "permanentdelete",
+                                valueTitle: "Xóa vĩnh viễn"
+                            },
+                            position: {
+                                value: "position",
+                                valueTitle: "Thay đổi vị trí"
+                            }
+                        },
+                    )
+                .col-4 
+                    a(
+                        href=`${prefixAdmin}/products/create`
+                        class="btn btn-outline-success"
+                    ) + Thêm mới
+
+
             table(class="table table-hover table-sm" checkbox-multi)
                 thead 
                     tr 

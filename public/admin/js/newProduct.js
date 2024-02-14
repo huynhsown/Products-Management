@@ -1,0 +1,7 @@
+const inputTitle = document.querySelector('input[name="title"]')
+const inputDesc = document.querySelector('textarea[name="description"]')
+const inputPrice = document.querySelector('input[name="price"]')
+const inputDiscount = document.querySelector('input[name="discountPercentage"]')
+const inputStock = document.querySelector('input[name="stock"]')
+const inputThumbnail = document.querySelector('input[name="thumbnail"]')
+const inputPosition = document.querySelector('input[name="position"]')

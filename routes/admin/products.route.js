@@ -9,5 +9,7 @@ router.delete('/delete-product/:id', controller.deleteProduct)
 router.get('/trash', controller.trashProduct)
 router.patch('/trash/restore/:id', controller.trashRestore)
 router.delete('/trash/permanent-delete/:id', controller.trashPermanentDelete)
+router.get('/create', controller.createProduct)
+router.post('/create', controller.createPostProduct)
 
 module.exports = router
