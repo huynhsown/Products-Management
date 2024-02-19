@@ -11,6 +11,7 @@ const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 
+
 //App Local Variables
 const systemConfig = require('./config/system.js')
 app.locals.prefixAdmin = systemConfig.prefixAdmin

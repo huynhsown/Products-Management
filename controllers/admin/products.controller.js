@@ -3,6 +3,7 @@ const filterStatusHelper = require('../../helpers/filterStatus')
 const searchHelper = require('../../helpers/search')
 const { prefixAdmin } = require('../../config/system')
 const itemsInPage = require('../../config/system').itemsInPage
+
 // [GET] /admin/products 
 module.exports.products = async (req,res)=>{
     //Filter
@@ -165,6 +166,8 @@ module.exports.createPostProduct = async (req,res) => {
     else{
         req.body.position = parseInt(req.body.position)
     }
+
+    req.body.thumbnail = `/uploads/${req.file.filename}`
 
     try {
         await Product.create(req.body)
