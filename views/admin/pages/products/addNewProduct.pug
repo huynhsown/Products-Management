@@ -1,6 +1,10 @@
 extends ../../layouts/default.pug
+include ../../mixins/flash.pug
 
 block main 
+
+    +flash()
+
     h1.mb-4 Thêm mới sản phẩm
     form(
         action=`${prefixAdmin}/products/create?method=POST`

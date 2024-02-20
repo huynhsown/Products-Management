@@ -155,6 +155,7 @@ module.exports.createProduct = (req,res) => {
 }
 
 module.exports.createPostProduct = async (req,res) => {
+
     req.body.price = parseInt(req.body.price)
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
@@ -167,7 +168,7 @@ module.exports.createPostProduct = async (req,res) => {
         req.body.position = parseInt(req.body.position)
     }
 
-    req.body.thumbnail = `/uploads/${req.file.filename}`
+    if(req.file) req.body.thumbnail = `/uploads/${req.file.filename}`
 
     try {
         await Product.create(req.body)
