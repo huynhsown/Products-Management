@@ -15,5 +15,8 @@ router.patch('/trash/restore/:id', controller.trashRestore)
 router.delete('/trash/permanent-delete/:id', controller.trashPermanentDelete)
 router.get('/create', controller.createProduct)
 router.post('/create', upload.single('thumbnail'), validates.createPost ,controller.createPostProduct)
+router.get('/repair/:id', controller.repairProduct)
+router.patch('/repair/:id', controller.repairPatchProduct)
+router.get('/detail/:id', controller.detailProduct)
 
 module.exports = router

@@ -147,13 +147,14 @@ module.exports.trashPermanentDelete = async (req, res) => {
     res.redirect('back')
 }
 
-//Create New Product
+//[GET] Create New Product 
 module.exports.createProduct = (req,res) => {
     res.render('admin/pages/products/addNewProduct', {
         pageTitle: "Tạo mới sản phẩm"
     })
 }
 
+//[POST] Create New Product 
 module.exports.createPostProduct = async (req,res) => {
 
     req.body.price = parseInt(req.body.price)
@@ -176,4 +177,48 @@ module.exports.createPostProduct = async (req,res) => {
         console.log("Error")
     }
     res.redirect(`${prefixAdmin}/products`)
+}
+
+//[GET] Repair Product
+module.exports.repairProduct = async (req, res) => {
+    const id = req.params.id
+    const find = {
+        deleted: false,
+        _id: id
+    }
+    const product = await Product.findOne(find)
+    if(product){
+        res.render('admin/pages/products/repairProduct', {
+            pageTitle: "Chỉnh sửa sản phẩm",
+            product: product
+        })
+    }
+    else{
+        res.send("ERROR ")
+    }
+}
+
+//[PATCH] Repair Product 
+module.exports.repairPatchProduct = async(req, res) => {
+    res.send("OK")
+}
+
+//[GET] detail Product
+
+module.exports.detailProduct = async(req,res) => {
+    const id = req.params.id
+    const find = {
+        deleted: false,
+        _id: id
+    }
+    const product = await Product.findOne(find)
+    if(product){
+        res.render('admin/pages/products/detail', {
+            pageTitle: product.title,
+            product: product
+        })
+    }
+    else{
+        res.redirect('back')
+    }
 }
